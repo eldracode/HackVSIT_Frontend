@@ -1,99 +1,35 @@
-
 import 'package:flutter/material.dart';
+import 'FormPage.dart';
+import 'PostLogin.dart';
+import 'postData.dart';
+import 'Registration.dart';
+import 'cards.dart';
+import 'description.dart';
+import 'teach.dart';
 
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
+  final routes = <String, WidgetBuilder>{
+    PL.tag: (context) => PL(),
+    PostData.tag: (context) => PostData(),
+    Registration.tag: (context) => Registration(),
+    FormPage.tag: (context) => FormPage(),
+    cards.tag: (context) => cards(),
+    desc.tag: (context) => desc(),
+    teachForm.tag: (context) => teachForm(),
+  };
+  static var token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjIyfQ.d7JvsIzxacZiVbc9V1U9qrNCIJPwtpifmnnFii3ycG4';
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      theme: new ThemeData(),
+      debugShowCheckedModeBanner: false,
+      theme: new ThemeData(
+        primarySwatch: Colors.red,
+      ),
       home: new FormPage(),
+      routes: routes,
     );
-  }
-}
-
-class FormPage extends StatefulWidget {
-  @override
-  _FormPageState createState() => new _FormPageState();
-}
-
-class _FormPageState extends State<FormPage> {
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
-  final formKey = new GlobalKey<FormState>();
-
-  String _email;
-  String _password;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  void _submit() {
-    final form = formKey.currentState;
-
-    if (form.validate()) {
-      form.save();
-
-      performLogin();
-    }
-  } 
-
-  void performLogin() {
-    
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        key: scaffoldKey,
-        appBar: new AppBar(
-          title: new Text(
-          'Login Page',
-  textAlign: TextAlign.center,
-  overflow: TextOverflow.ellipsis,
-  style: TextStyle(fontWeight: FontWeight.bold),
-),
-        ),
-        body: new Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: new Form(
-            key: formKey,
-            child: new Column(
-              children: <Widget>[
-                new TextFormField(
-                  decoration: new InputDecoration(labelText: "Email",hintText: "Enter Email Address"),
-                  validator: (val) =>
-                      !val.contains('@') ? 'Email should contain @' : null,
-                  onSaved: (val) => _email = val,
-                ),
-                new TextFormField(
-                  decoration: new InputDecoration(labelText: "Password",hintText: "Enter Password"),
-                  validator: (val) =>
-                      val.length < 6 ? 'Password less than 6 characters' : null,
-                  onSaved: (val) => _password = val,
-                  obscureText: true,
-                ),
-                new Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                ),
-                new RaisedButton(
-                  child: new Text(
-                    "login",
-                    style: new TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.blue,
-                  onPressed: _submit,
-                )
-              ],
-            ),
-          ),
-        ));
   }
 }
